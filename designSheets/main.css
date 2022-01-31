@@ -1,9 +1,21 @@
 body{
+    color: black;
+}
+
+label{ /*vill ha restriction label*/
     color: red;
 }
-h1{
-    color: greenyellow;
+
+.gameboard{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    max-width: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    min-height: 300px;
 }
-#firstParagraph{
-    color: blue;
+.tile{
+    border: 1px solid black;
 }
