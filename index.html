@@ -1,13 +1,22 @@
 <!DOCTYPE html> 
 <html>
     <head>
-        <title>Tre i rad</title>
+        <title>Tic-Tac-Toe</title>
         <link rel = "stylesheet" href="designsheets/main.css">
         <script src = "javascripts/main.js" ></script>
     </head>
     <body>
-        <h1>Spel</h1>
-        <p>Paragraph 1</p>
-        <p>Paragraph 2</p>
+        <h1>Tic-Tac-Toe</h1>
+        <p id="firstParagraph">This is a Tic-Tac-Toe game</p>
+        <section class="gameboard">
+            <div class="tiles"></div>
+        </section>
+        <form action="/newpage">
+            <label for="nRows">Number of rows:</label>
+            <input type="text" id="nRows" name="nRows">
+            <label for="nCols">Number of columns:</label>
+            <input type="text" id="nCols" name="nCols"><br><br>
+            <input type="submit" value="Start Game">
+        </form>
     </body>
 </html>
