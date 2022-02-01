@@ -1,8 +1,14 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Itim", cursive;
+}
+
 body{
     color: black;
 }
 
-label{ /*vill ha restriction label*/
+#restriction{
     color: red;
 }
 
@@ -15,7 +21,9 @@ label{ /*vill ha restriction label*/
     max-width: 300px;
     min-width: 300px;
     min-height: 300px;
+
 }
 .tile{
     border: 1px solid black;
+    cursor: pointer;
 }

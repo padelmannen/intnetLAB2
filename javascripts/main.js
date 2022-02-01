@@ -1,6 +1,6 @@
 //alert("Hello and welcome");
 
-const gameboard = document.querySelector("div.gameboard");
+const gameboard = document.querySelector(".gameboard");
 const tiles = new Array(9);
 
 const createGameboard = () => {
