@@ -3,6 +3,10 @@
 const gameboard = document.querySelector(".gameboard");
 const tiles = new Array(9);
 
+function startGame() {
+    window.location.href="game.html";
+  }
+
 const createGameboard = () => {
     let gameboardTable = document.createElement("table");
     gameboardTable.className = "gameboardTable";

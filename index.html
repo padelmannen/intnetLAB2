@@ -22,13 +22,14 @@
             <div class="tile"></div>
         </section>
         <!-- vet inte om det ska vara ett form -->
-        <form action="/newpage">
+        <form>
             <label for="nRows">Number of rows:</label>
             <input type="text" id="nRows" name="nRows"><br>
             <label for="nCols">Number of columns:</label>
             <input type="text" id="nCols" name="nCols"><br>
-            <label id="restriction">Minimum number of rows and columns 3</label><br><br>
-            <input type="submit" value="Start Game">
+            <!-- <label id="restriction">Minimum number of rows and columns 3</label><br><br>
+            <input type="submit" value="Start Game" onclick="location.href = 'game.html'"> -->
+            <button onclick="startGame()">Start game</button>
         </form>
     </body>
 </html>
