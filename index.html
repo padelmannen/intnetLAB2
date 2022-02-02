@@ -15,11 +15,11 @@
         <!-- vet inte om det ska vara ett form -->
         <form onsubmit="return startGame()">
             <label for="nRows">Number of rows:</label>
-            <input type="number" onchange="updateGameboard()" id="nRows" name="nRows"><br>
+            <input type="number" onchange="updateGameboard()" id="nRows" name="nRows" min="3" max="30"value = "10"><br>
             <label for="nCols">Number of columns:</label>
-            <input type="number" onchange="updateGameboard()" id="nCols" name="nCols"><br>
+            <input type="number" onchange="updateGameboard()" id="nCols" name="nCols" min="3" max="30" value ="8"><br>
             <label for="winNumber">Number of tiles in a row to win: </label>
-            <input type="number" onchange="updateGameboard()" id="winNumber" name="winNumber"><br>
+            <input type="number" onchange="updateGameboard()" id="winNumber" name="winNumber" min="3" max="30" value = "4"><br>
             <input type="submit" value="Start Game">
         </form>
     </body>
