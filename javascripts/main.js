@@ -1,5 +1,5 @@
 const gameboard = document.getElementById("gameboard");
-
+const xTurn = true; 
 window.createGameBoard(10,8,4);
 
 //const tiles = new Array(80);
@@ -42,14 +42,21 @@ function createGameBoard(rows, cols, winNumber){
         // alert("create tile")
         let tile = document.createElement("div");
         //tile.innerText = "X";
-       // tile.addEventListener("click", click());
+        tile.addEventListener("click", click);
         gameboard.appendChild(tile).className = "tile";
     };
 };
 
 function click(){
     alert("button clicked")
-}
+    if (xTurn){
+        tile.innerText = "X";
+    }
+    else{
+        tile.innerText = "O";
+    }
+    xTurn = (!(xTurn));
+};
 
 function okValues(rows, cols, winNumber){
     //alert("kollar om godkända värden")
