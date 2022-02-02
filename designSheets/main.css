@@ -22,12 +22,16 @@ body{
     display: grid;
     grid-template-rows: repeat(var(--grid-rows), auto);
     grid-template-columns: repeat(var(--grid-cols), auto);
-    max-width: 300px;
-    max-width: 300px;
-    min-width: 300px;
-    min-height: 300px;
+    width: fit-content;
 }
+
 .tile{
     border: 1px solid black;
     cursor: pointer;
+    min-width: 30px;
+    max-width: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    text-align: center;
+    text-size-adjust: 30px;
 }

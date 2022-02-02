@@ -1,5 +1,5 @@
 const gameboard = document.getElementById("gameboard");
-const xTurn = true; 
+let xTurn = true; 
 window.createGameBoard(10,8,4);
 
 //const tiles = new Array(80);
@@ -38,12 +38,27 @@ function createGameBoard(rows, cols, winNumber){
     gameboard.style.setProperty('--grid-rows', rows);
     gameboard.style.setProperty('--grid-cols', cols);
     //alert("styled")
-    for (c = 0; c < (rows * cols); c++) {
-        // alert("create tile")
-        let tile = document.createElement("div");
-        //tile.innerText = "X";
-        tile.addEventListener("click", click);
-        gameboard.appendChild(tile).className = "tile";
+    for (var row = 1; row <= rows; row++) {
+        for (var col = 1; col <= cols; col++) {
+            // alert("create tile")
+            let tile = document.createElement("div");
+            //tile.innerText = "X";
+            tile.setAttribute("row", row.toString())
+            tile.setAttribute("col", col.toString())
+            //tile.addEventListener("click", click);
+            gameboard.appendChild(tile).className = "tile";
+        };
+    };
+    gameboard.onclick = function( e ){
+        var target = e.target;
+        alert("button clicked");
+        if (xTurn){
+            target.innerText = "X";
+        }
+        else{
+            target.innerText = "O";
+        }
+        xTurn = (!(xTurn));
     };
 };
 
@@ -60,17 +75,9 @@ function click(){
 
 function okValues(rows, cols, winNumber){
     //alert("kollar om godkända värden")
-    if (rows < 3 || cols < 3){
-        alert("At least a 3x3 board");
-        return false;
-    }
-    else if (winNumber > rows && winNumber > cols){
+    
+    if (winNumber > rows && winNumber > cols){
         alert("Winning condition cant be greater than the biggest dimension (" + Math.max(rows, cols) + ")");
-        return false;
-    }
-    //alert(winNumber);
-    else if (winNumber < 3){
-        alert("At least 3 in a row to win");
         return false;
     }
 }
