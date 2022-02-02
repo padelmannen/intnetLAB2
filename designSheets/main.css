@@ -22,6 +22,7 @@ body{
     grid-template-columns: repeat(var(--grid-cols), auto);
     width: fit-content;
 }
+
 .tile{
     border: 1px solid black;
     cursor: pointer;
@@ -29,6 +30,7 @@ body{
     max-width: 30px;
     min-width: 30px;
     min-height: 30px;
+    text-align: center;
 }
 
 form {
