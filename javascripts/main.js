@@ -13,10 +13,6 @@ function startGame() {
     const rows = document.getElementById('nRows').value;
     const cols = document.getElementById('nCols').value;
     const winNumber = document.getElementById('winNumber').value;
-    if (okValues(rows, cols, winNumber)){
-        alert("startar spelet");
-    };
-
     return false;
 };
 
@@ -43,7 +39,7 @@ function createGameBoard(rows, cols, winNumber){
         for (var col = 1; col <= cols; col++) {
             // alert("create tile")
             let tile = document.createElement("div");
-            //tile.innerText = "X";
+            tile.innerText = "";
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
             //tile.addEventListener("click", click);
@@ -64,21 +60,33 @@ function createGameBoard(rows, cols, winNumber){
                 target.innerText = "O";
             }
             xTurn = (!(xTurn));
+            checkForWin(target)
         }
         else{
-            alert("Click on empty spot")
+            alert("Click on emtpy spot")
         }
-
     };
 };
 
-function click(){
-    alert("button clicked")
-    if (xTurn){
-        tile.innerText = "X";
+
+function checkForWin(target){
+    startRow = target.row;
+    startCol = target.col;
+    
+    var counter = 0;
+    //check horizontal
+    var okSquare = true;
+    var firstDirection = true;
+    const winNumber = document.getElementById('winNumber').value;
+    
+    while(okSquare){
+        var ownPiece = true; 
+        for (var curRow = startrow; curRow <=(startRow-winNumber); row--) {
+            nextSquare = document.querySelector("[col=startCol][row=curRow]")
+            if ((document.querySelector("[col=startCol][row=curRow]").innerText = ""){
+                alert("nånting")
+            }
+    
+        }
     }
-    else{
-        tile.innerText = "O";
-    }
-    xTurn = (!(xTurn));
-};
+}
