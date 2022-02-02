@@ -3,23 +3,23 @@
     <head>
         <title>Tic-Tac-Toe</title>
         <link rel = "stylesheet" href="designsheets/main.css">
-        <script src = "javascripts/main.js" ></script>
+        <script src = "javascripts/main.js" defer></script>
     </head>
     <body>
         <h1>Tic-Tac-Toe</h1>
         <p id="firstParagraph">This is a Tic-Tac-Toe game</p>
         <!-- tänker att javascript tar in gameboard och lägger till tiles -->
         
-        <section id = "gameboard">
-           
-        </section>
+        <div id = "gameboard">
+        </div>
         <!-- vet inte om det ska vara ett form -->
         <form onsubmit="return startGame()">
             <label for="nRows">Number of rows:</label>
-            <input type="text" id="nRows" name="nRows"><br>
+            <input type="number" onchange="updateGameboard()" id="nRows" name="nRows"><br>
             <label for="nCols">Number of columns:</label>
-            <input type="text" id="nCols" name="nCols"><br>
-            <label id="restriction">Minimum number of rows and columns 3</label><br><br>
+            <input type="number" onchange="updateGameboard()" id="nCols" name="nCols"><br>
+            <label for="winNumber">Number of tiles in a row to win: </label>
+            <input type="number" onchange="updateGameboard()" id="winNumber" name="winNumber"><br>
             <input type="submit" value="Start Game">
         </form>
     </body>
