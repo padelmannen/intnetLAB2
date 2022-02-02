@@ -47,19 +47,28 @@ function createGameBoard(rows, cols, winNumber){
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
             //tile.addEventListener("click", click);
+            tile.innerText = "";
             gameboard.appendChild(tile).className = "tile";
+            gameboard.appendChild(tile).row = row;
+            gameboard.appendChild(tile).col = col;
         };
     };
-    gameboard.onclick = function( e ){
+    gameboard.onclick = function(e){
         var target = e.target;
-        alert("button clicked");
-        if (xTurn){
-            target.innerText = "X";
+        alert("Row:" + target.row + " Col:" + target.col)
+        if (target.innerText == ""){
+            if (xTurn){
+                target.innerText = "X";
+            }
+            else{
+                target.innerText = "O";
+            }
+            xTurn = (!(xTurn));
         }
         else{
-            target.innerText = "O";
+            alert("Click on empty spot")
         }
-        xTurn = (!(xTurn));
+
     };
 };
 
@@ -73,10 +82,3 @@ function click(){
     }
     xTurn = (!(xTurn));
 };
-
-function okValues(rows, cols, winNumber){
-    if (winNumber > rows && winNumber > cols){
-        alert("Winning condition cant be greater than the biggest dimension (" + Math.max(rows, cols) + ")");
-        return false;
-    }
-}
