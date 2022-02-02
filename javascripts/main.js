@@ -13,10 +13,6 @@ function startGame() {
     const rows = document.getElementById('nRows').value;
     const cols = document.getElementById('nCols').value;
     const winNumber = document.getElementById('winNumber').value;
-    if (okValues(rows, cols, winNumber)){
-        alert("startar spelet");
-    };
-
     return false;
 };
 
@@ -43,7 +39,7 @@ function createGameBoard(rows, cols, winNumber){
         for (var col = 1; col <= cols; col++) {
             // alert("create tile")
             let tile = document.createElement("div");
-            //tile.innerText = "X";
+            tile.innerText = "";
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
             //tile.addEventListener("click", click);
@@ -52,31 +48,51 @@ function createGameBoard(rows, cols, winNumber){
     };
     gameboard.onclick = function( e ){
         var target = e.target;
-        alert("button clicked");
-        if (xTurn){
-            target.innerText = "X";
+        //alert("button clicked");
+        if (target.innerText == ""){
+            if (xTurn){
+                target.innerText = "X";
+            }
+            else{
+                target.innerText = "O";
+            }
+            xTurn = (!(xTurn));
+            checkForWin(target)
         }
         else{
-            target.innerText = "O";
+            alert("Click on emtpy spot")
         }
-        xTurn = (!(xTurn));
     };
 };
 
-function click(){
-    alert("button clicked")
-    if (xTurn){
-        tile.innerText = "X";
-    }
-    else{
-        tile.innerText = "O";
-    }
-    xTurn = (!(xTurn));
-};
+// function click(){
+//     //alert("button clicked")
+//     if (xTurn){
+//         tile.innerText = "X";
+//     }
+//     else{
+//         tile.innerText = "O";
+//     }
+//     xTurn = (!(xTurn));
+// };
 
-function okValues(rows, cols, winNumber){
-    if (winNumber > rows && winNumber > cols){
-        alert("Winning condition cant be greater than the biggest dimension (" + Math.max(rows, cols) + ")");
-        return false;
+function checkForWin(target){
+    startRow = target.row;
+    startCol = target.col;
+    alert(startCol)
+    
+    var counter = 0;
+    //check horizontal
+    var okSquare = true;
+    var firstDirection = true;
+    const winNumber = document.getElementById('winNumber').value;
+    
+    while(okSquare){
+        var ownPiece = true; 
+        for (var curRow = startrow; curRow <=(startRow-winNumber); row--) {
+            nextSquare = document.querySelector("[col=startCol][row=curRow]")
+            if ((document.querySelector("[col=startCol][row=curRow]").innerText = ""){}
+    
     }
+
 }
