@@ -59,18 +59,9 @@ function click(){
 };
 
 function okValues(rows, cols, winNumber){
-    //alert("kollar om godkända värden")
-    if (rows < 3 || cols < 3){
-        alert("At least a 3x3 board");
-        return false;
-    }
-    else if (winNumber > rows && winNumber > cols){
+    if (winNumber > rows && winNumber > cols){
         alert("Winning condition cant be greater than the biggest dimension (" + Math.max(rows, cols) + ")");
         return false;
     }
-    //alert(winNumber);
-    else if (winNumber < 3){
-        alert("At least 3 in a row to win");
-        return false;
-    }
+
 }
