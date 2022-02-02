@@ -75,8 +75,6 @@ function click(){
 };
 
 function okValues(rows, cols, winNumber){
-    //alert("kollar om godkända värden")
-    
     if (winNumber > rows && winNumber > cols){
         alert("Winning condition cant be greater than the biggest dimension (" + Math.max(rows, cols) + ")");
         return false;

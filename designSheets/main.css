@@ -11,10 +11,8 @@
 
 body{
     color: black;
-}
-
-#restriction{
-    color: red;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 #gameboard{
@@ -28,10 +26,15 @@ body{
 .tile{
     border: 1px solid black;
     cursor: pointer;
-    min-width: 30px;
     max-width: 30px;
+    max-width: 30px;
+    min-width: 30px;
     min-height: 30px;
-    max-height: 30px;
     text-align: center;
-    text-size-adjust: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;  
 }
