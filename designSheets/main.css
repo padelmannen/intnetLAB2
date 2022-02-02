@@ -13,10 +13,6 @@ body{
     color: black;
 }
 
-#restriction{
-    color: red;
-}
-
 #gameboard{
     margin: 0 auto;
     display: grid;
