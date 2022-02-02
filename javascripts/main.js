@@ -24,6 +24,7 @@ function updateGameboard () {
     const gameboard = document.getElementById("gameboard");
     const rows = document.getElementById('nRows').value;
     const cols = document.getElementById('nCols').value;
+    document.getElementById('winNumber').setAttribute("max", Math.max(rows, cols).toString());
     const winNumber = document.getElementById('winNumber').value;
     gameboard.innerHTML = '';  //nollställer gameboard
     createGameBoard(rows, cols, winNumber);
