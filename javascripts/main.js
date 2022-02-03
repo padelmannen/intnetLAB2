@@ -7,12 +7,19 @@ var cols = document.getElementById('nCols').value;
 //const tiles = new Array(80);
 
 function startGame() {
+    //alert("start")
     //window.location="game.html";
     //const checkBox = document.getElementById('nrwos').checked;
     //createGameboard(10, 8);
     //alert("clickade på startar spel")
     const winNumber = document.getElementById('winNumber').value;
-    return false;
+    document.getElementsById("nRows").disabled=true;
+    document.getElementsById("nCols").disabled=true;
+    document.getElementsById("winNumber").disabled=true;
+
+
+    alert("ändrat")
+    updateGameboard();
 };
 
 function updateGameboard () {
