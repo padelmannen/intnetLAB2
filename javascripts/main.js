@@ -1,6 +1,8 @@
 const gameboard = document.getElementById("gameboard");
 let xTurn = true; 
 window.createGameBoard(10,8,4);
+var rows = document.getElementById('nRows').value;
+var cols = document.getElementById('nCols').value;
 
 //const tiles = new Array(80);
 
@@ -9,17 +11,14 @@ function startGame() {
     //const checkBox = document.getElementById('nrwos').checked;
     //createGameboard(10, 8);
     //alert("clickade på startar spel")
-    const gameboard = document.getElementById("gameboard");
-    const rows = document.getElementById('nRows').value;
-    const cols = document.getElementById('nCols').value;
     const winNumber = document.getElementById('winNumber').value;
     return false;
 };
 
 function updateGameboard () {
-    const gameboard = document.getElementById("gameboard");
-    const rows = document.getElementById('nRows').value;
-    const cols = document.getElementById('nCols').value;
+    //gameboard = document.getElementById("gameboard");
+    rows = document.getElementById('nRows').value;
+    cols = document.getElementById('nCols').value;
     document.getElementById('winNumber').setAttribute("max", Math.max(rows, cols).toString());
     const winNumber = document.getElementById('winNumber').value;
     gameboard.innerHTML = '';  //nollställer gameboard
@@ -51,7 +50,7 @@ function createGameBoard(rows, cols, winNumber){
     };
     gameboard.onclick = function(e){
         var target = e.target;
-        alert("Row:" + target.row + " Col:" + target.col)
+        //alert("Row:" + target.row + " Col:" + target.col)
         if (target.innerText == ""){
             if (xTurn){
                 target.innerText = "X";
@@ -59,8 +58,8 @@ function createGameBoard(rows, cols, winNumber){
             else{
                 target.innerText = "O";
             }
-            xTurn = (!(xTurn));
-            checkForWin(target)
+            xTurn = (!(xTurn));     //av någon konstig anledning måste dessa vara i denna ordningen
+            checkForWin(target);
         }
         else{
             alert("Click on emtpy spot")
@@ -72,21 +71,80 @@ function createGameBoard(rows, cols, winNumber){
 function checkForWin(target){
     startRow = target.row;
     startCol = target.col;
-    
+    //alert(startCol);
+    var curTurn = "X";
+    if(xTurn){
+        curTurn = "O";
+    }
+
     var counter = 0;
-    //check horizontal
-    var okSquare = true;
-    var firstDirection = true;
+    var range = document.getElementById('winNumber').value -1;
     const winNumber = document.getElementById('winNumber').value;
     
-    while(okSquare){
-        var ownPiece = true; 
-        for (var curRow = startrow; curRow <=(startRow-winNumber); row--) {
-            nextSquare = document.querySelector("[col=startCol][row=curRow]")
-            if ((document.querySelector("[col=startCol][row=curRow]").innerText = ""){
-                alert("nånting")
-            }
-    
+    //horizontal
+    var d = -1;
+    for (let dir = 0; dir <= 1; dir++) {
+        if (dir == 1){
+            d = 1;
         }
+        console.log("direction " + d);
+         for(let nTiles = 1; nTiles <= range; nTiles++){
+            //console.log("nTiles " + nTiles);
+            nextCol = startCol + (nTiles * d);
+            if (nextCol > 0 && nextCol <= cols){
+                //console.log("nextCol " + nextCol);
+                console.log("Checking: row "+startRow+" col "+nextCol);
+                var nextSquare = document.querySelector('[row="startRow"][col="nextCol"]');
+                console.log("checkedTile: " + nextSquare)
+                if (nextSquare != null){
+                    console.log("match!")
+                    counter++;
+                    break;
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        } 
+    }
+
+    if(playerWon(counter, winNumber, curTurn)){
+        return;
+    }
+
+/*     counter = 0;
+    //vertical
+    //kod
+    if(playerWon(counter, winNumber, curTurn)){
+        return;
+    }
+
+    counter = 0; //återställ counter
+    //firstDiagonal
+    //kod
+    if(playerWon(counter, winNumber, curTurn)){
+        return;
+    }
+
+    counter = 0; //återställ counter
+    //secondDiagonal
+    //kod
+    if(playerWon(counter, winNumber, curTurn)){
+        return;
+    } */
+};
+
+function playerWon(counter, winNumber, curTurn){
+    console.log("Win function");
+    console.log(counter + "vs" + winNumber);
+    if (counter >= winNumber){
+        console.log("WIN");
+        alert("Spelare " + curTurn + " vann!");
+        return true;
+    return false;
     }
 }
+
