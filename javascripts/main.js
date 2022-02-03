@@ -5,6 +5,7 @@ var rows = document.getElementById('nRows').value;
 var cols = document.getElementById('nCols').value;
 var winNumber = document.getElementById('winNumber').value;
 var firstTurn = true;
+var gameRunning = false;
 //var curTurn = "X";
 
 //const tiles = new Array(80);
@@ -15,14 +16,18 @@ function startGame() {
     //const checkBox = document.getElementById('nrwos').checked;
     //createGameboard(10, 8);
     //alert("clickade på startar spel")
+    updateGameboard();
     document.getElementById("nCols").disabled = true;
     document.getElementById("nRows").disabled = true;
     document.getElementById("winNumber").disabled = true;
     document.getElementById("startButton").disabled = true;
     document.getElementById("gameboard").disabled = false;
+    gameRunning = true;
+    gameboard.style.cursor = "pointer";
+
 
     
-    updateGameboard();
+    //updateGameboard();
     
 };
 
@@ -44,6 +49,8 @@ function createGameBoard(rows, cols, winNumber){
     const gameboard = document.getElementById("gameboard");
     gameboard.style.setProperty('--grid-rows', rows);
     gameboard.style.setProperty('--grid-cols', cols);
+
+
     //alert("styled")
     for (var row = 1; row <= rows; row++) {
         for (var col = 1; col <= cols; col++) {
@@ -53,30 +60,35 @@ function createGameBoard(rows, cols, winNumber){
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
             tile.setAttribute("coordinate", row.toString()+","+col.toString())
+        
             //tile.addEventListener("click", click);
             gameboard.appendChild(tile).className = "tile";
             gameboard.appendChild(tile).row = row;
             gameboard.appendChild(tile).col = col;
-            
         };
     };
     gameboard.onclick = function(e){
         var target = e.target;
         //alert("Row:" + target.row + " Col:" + target.col)
-        if (firstTurn || okTarget(target) && target.innerText == ""){
-            if (xTurn){
-                target.innerText = "X";
-                firstTurn = false;
+        if (gameRunning){
+            if (firstTurn || okTarget(target) && target.innerText == ""){
+                if (xTurn){
+                    target.innerText = "X";
+                    firstTurn = false;
+                }
+                else{
+                    target.innerText = "O";
+                }
+                if(checkForWin(target)){
+                    gameRunning = false;
+                    gameboard.style.cursor = "default";
+                }
+                xTurn = (!(xTurn));     //av någon konstig anledning måste dessa vara i denna ordningen
+                
             }
             else{
-                target.innerText = "O";
+                alert("Click on emtpy spot beside a placed piece")
             }
-            checkForWin(target);
-            xTurn = (!(xTurn));     //av någon konstig anledning måste dessa vara i denna ordningen
-            
-        }
-        else{
-            alert("Click on emtpy spot beside a placed piece")
         }
     };
 };
@@ -111,17 +123,17 @@ function checkForWin(target){
 
     if(horizontalWin()){
         alert("Spelare " + curTurn + " vann!");
-        return;
+        return true;
     }
     if(verticalWin()){
         alert("Spelare " + curTurn + " vann!");
-        return;
+        return true;
     }
     if(diagonalWin()){
         alert("Spelare " + curTurn + " vann!");
-        return;
+        return true;
     }
-    
+    return false;
 }
 
 function horizontalWin(){
