@@ -3,6 +3,8 @@ let xTurn = true;
 window.createGameBoard(10,8,4);
 var rows = document.getElementById('nRows').value;
 var cols = document.getElementById('nCols').value;
+var winNumber = document.getElementById('winNumber').value;
+//var curTurn = "X";
 
 //const tiles = new Array(80);
 
@@ -12,14 +14,7 @@ function startGame() {
     //const checkBox = document.getElementById('nrwos').checked;
     //createGameboard(10, 8);
     //alert("clickade på startar spel")
-    const winNumber = document.getElementById('winNumber').value;
-    document.getElementsById("nRows").disabled=true;
-    document.getElementsById("nCols").disabled=true;
-    document.getElementsById("winNumber").disabled=true;
-
-
-    alert("ändrat")
-    updateGameboard();
+    return false;
 };
 
 function updateGameboard () {
@@ -27,7 +22,7 @@ function updateGameboard () {
     rows = document.getElementById('nRows').value;
     cols = document.getElementById('nCols').value;
     document.getElementById('winNumber').setAttribute("max", Math.max(rows, cols).toString());
-    const winNumber = document.getElementById('winNumber').value;
+    winNumber = document.getElementById('winNumber').value;
     gameboard.innerHTML = '';  //nollställer gameboard
     createGameBoard(rows, cols, winNumber);
 
@@ -60,15 +55,16 @@ function createGameBoard(rows, cols, winNumber){
     gameboard.onclick = function(e){
         var target = e.target;
         //alert("Row:" + target.row + " Col:" + target.col)
-        if (target.innerText == ""){
+        if (okTarget(target) && target.innerText == ""){
             if (xTurn){
                 target.innerText = "X";
             }
             else{
                 target.innerText = "O";
             }
-            xTurn = (!(xTurn));     //av någon konstig anledning måste dessa vara i denna ordningen
             checkForWin(target);
+            xTurn = (!(xTurn));     //av någon konstig anledning måste dessa vara i denna ordningen
+            
         }
         else{
             alert("Click on emtpy spot")
@@ -76,37 +72,53 @@ function createGameBoard(rows, cols, winNumber){
     };
 };
 
+function okTarget(target){
+    targetRow = target.row;
+    targetCol = target.col;
+
+
+}
 
 function checkForWin(target){
     startRow = target.row;
     startCol = target.col;
-    //alert(startCol);
-    var curTurn = "X";
-    if(xTurn){
+
+    curTurn = "X";
+    if(!xTurn){
         curTurn = "O";
     }
 
-    var counter = 0;
-    var range = document.getElementById('winNumber').value -1;
-    const winNumber = document.getElementById('winNumber').value;
+    if(horizontalWin()){
+        alert("Spelare " + curTurn + " vann!");
+        return;
+    }
+    if(verticalWin()){
+        alert("Spelare " + curTurn + " vann!");
+        return;
+    }
+    if(diagonalWin()){
+        alert("Spelare " + curTurn + " vann!");
+        return;
+    }
     
-    //horizontal
+}
+
+function horizontalWin(){
+    counter = 1;
+    var range = winNumber -1;
     var d = -1;
     for (let dir = 0; dir <= 1; dir++) {
         if (dir == 1){
             d = 1;
         }
         console.log("direction " + d);
-         for(let nTiles = 1; nTiles <= range; nTiles++){
-            //console.log("nTiles " + nTiles);
+        for(let nTiles = 1; nTiles <= range; nTiles++){
             nextCol = startCol + (nTiles * d);
             if (nextCol > 0 && nextCol <= cols){
-                //console.log("nextCol " + nextCol);
                 console.log("Checking: row "+startRow+" col "+nextCol);
-                var searchString = '[col="'+nextCol+'"][row="'+startRow+'"]'
-                let nextSquare = document.querySelector(searchString).innerText;
+                let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+startRow+'"]').innerText;
                 console.log("checkedTile: " + nextSquare)
-                if (nextSquare != null){
+                if (nextSquare == curTurn){
                     console.log("match!")
                     counter++;
                 }
@@ -119,40 +131,96 @@ function checkForWin(target){
             }
         } 
     }
-    if(playerWon(counter, winNumber, curTurn)){
-        return;
-    }
-
-/*     counter = 0;
-    //vertical
-    //kod
-    if(playerWon(counter, winNumber, curTurn)){
-        return;
-    }
-
-    counter = 0; //återställ counter
-    //firstDiagonal
-    //kod
-    if(playerWon(counter, winNumber, curTurn)){
-        return;
-    }
-
-    counter = 0; //återställ counter
-    //secondDiagonal
-    //kod
-    if(playerWon(counter, winNumber, curTurn)){
-        return;
-    } */
-};
-
-function playerWon(counter, winNumber, curTurn){
-    console.log("Win function");
-    console.log(counter + "vs" + winNumber);
-    if (counter >= winNumber){
-        console.log("WIN");
-        alert("Spelare " + curTurn + " vann!");
-        return true;
-    }
-    return false;
+    return counter >= winNumber
 }
 
+function verticalWin(){
+    counter = 1;
+    var range = winNumber -1;
+    var d = -1;
+    for (let dir = 0; dir <= 1; dir++) {
+        if (dir == 1){
+            d = 1;
+        }
+        for(let nTiles = 1; nTiles <= range; nTiles++){
+            nextRow = startRow + (nTiles * d);
+            if (nextRow > 0 && nextRow <= rows){
+                console.log("Checking: row "+nextRow+" col "+startCol);
+                let nextSquare = document.querySelector('[col="'+startCol+'"][row="'+nextRow+'"]').innerText;
+                console.log("checkedTile: " + nextSquare)
+                if (nextSquare == curTurn){
+                    console.log("match!")
+                    counter++;
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        } 
+    }
+    return counter >= winNumber
+}
+function diagonalWin(){
+    counter = 1;
+    var range = winNumber -1;
+    var d = -1;
+    for (let dir = 0; dir <= 1; dir++) {
+        if (dir == 1){
+            d = 1;
+        }
+        for(let nTiles = 1; nTiles <= range; nTiles++){
+            nextRow = startRow + (nTiles * d);
+            nextCol = startCol + (nTiles * d);
+            if ((nextRow > 0 && nextRow <= rows) && (nextCol > 0 && nextCol <= cols)){
+                console.log("Checking: row "+nextRow+" col "+nextCol);
+                let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+nextRow+'"]').innerText;
+                console.log("checkedTile: " + nextSquare)
+                if (nextSquare == curTurn){
+                    console.log("match!")
+                    counter++;
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        } 
+    }
+    if(counter >= winNumber){
+        return true;
+    }
+    counter = 1;
+    var d = -1;
+    for (let dir = 0; dir <= 1; dir++) {
+        if (dir == 1){
+            d = 1;
+        }
+        for(let nTiles = 1; nTiles <= range; nTiles++){
+            nextRow = startRow + (nTiles * d);
+            nextCol = startCol + (nTiles * (-d));
+            if ((nextRow > 0 && nextRow <= rows) && (nextCol > 0 && nextCol <= cols)){
+                console.log("Checking: row "+nextRow+" col "+nextCol);
+                let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+nextRow+'"]').innerText;
+                console.log("checkedTile: " + nextSquare)
+                if (nextSquare == curTurn){
+                    console.log("match!")
+                    counter++;
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        } 
+    }
+    if(counter >= winNumber){
+        return true;
+    }
+}
