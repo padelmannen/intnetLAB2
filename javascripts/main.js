@@ -10,12 +10,20 @@ var firstTurn = true;
 //const tiles = new Array(80);
 
 function startGame() {
-    //alert("start")
+    alert("start")
     //window.location="game.html";
     //const checkBox = document.getElementById('nrwos').checked;
     //createGameboard(10, 8);
     //alert("clickade på startar spel")
-    return false;
+    document.getElementById("nCols").disabled = true;
+    document.getElementById("nRows").disabled = true;
+    document.getElementById("winNumber").disabled = true;
+    document.getElementById("startButton").disabled = true;
+    document.getElementById("gameboard").disabled = false;
+
+    
+    updateGameboard();
+    
 };
 
 function updateGameboard () {

@@ -16,10 +16,11 @@
                 <input type="number" onchange="updateGameboard()" id="nCols" name="nCols" min="3" max="30" value="8"><br>
                 <label for="winNumber">Number of tiles in a row to win: </label>
                 <input type="number" id="winNumber" name="winNumber" min="3" max="10" value="4"><br>
-                <button onclick="startGame()">Start game</button>
+                <button id="startButton" type="button" onclick="startGame()">Start game</button>
+                <button>Reset</button>
             </form>
         </div>
-        <div id = "gameboard">
+        <div id = "gameboard" disabled>
         </div>
     </body>
 </html>
