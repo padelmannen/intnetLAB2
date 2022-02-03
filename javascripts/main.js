@@ -94,12 +94,12 @@ function checkForWin(target){
             if (nextCol > 0 && nextCol <= cols){
                 //console.log("nextCol " + nextCol);
                 console.log("Checking: row "+startRow+" col "+nextCol);
-                var nextSquare = document.querySelector('[row="startRow"][col="nextCol"]');
+                var searchString = '[col="'+nextCol+'"][row="'+startRow+'"]'
+                let nextSquare = document.querySelector(searchString).innerText;
                 console.log("checkedTile: " + nextSquare)
                 if (nextSquare != null){
                     console.log("match!")
                     counter++;
-                    break;
                 }
                 else{
                     break;
@@ -110,7 +110,6 @@ function checkForWin(target){
             }
         } 
     }
-
     if(playerWon(counter, winNumber, curTurn)){
         return;
     }
@@ -144,7 +143,7 @@ function playerWon(counter, winNumber, curTurn){
         console.log("WIN");
         alert("Spelare " + curTurn + " vann!");
         return true;
-    return false;
     }
+    return false;
 }
 
