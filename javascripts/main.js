@@ -41,11 +41,13 @@ function createGameBoard(rows, cols, winNumber){
             tile.innerText = "";
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
+            tile.setAttribute("coordinate", row.toString()+","+col.toString())
             //tile.addEventListener("click", click);
             tile.innerText = "";
             gameboard.appendChild(tile).className = "tile";
             gameboard.appendChild(tile).row = row;
             gameboard.appendChild(tile).col = col;
+            
         };
     };
     gameboard.onclick = function(e){
@@ -94,12 +96,28 @@ function checkForWin(target){
             if (nextCol > 0 && nextCol <= cols){
                 //console.log("nextCol " + nextCol);
                 console.log("Checking: row "+startRow+" col "+nextCol);
-                var nextSquare = document.querySelector('[row="startRow"][col="nextCol"]');
-                console.log("checkedTile: " + nextSquare)
-                if (nextSquare != null){
-                    console.log("match!")
-                    counter++;
-                    break;
+                var curCor = startRow.toString()+","+nextCol.toString()
+                console.log("checking coord:"+curCor)
+                var squares = document.querySelectorAll("div");
+                
+                for (let i = 1; i < squares.length; i++) {
+                    if (squares[i].hasAttribute("coordinate")){
+                        if (squares[i].getAttribute("coordinate")==curCor){
+                            var nextSquareContent = squares[i].innerText;
+                            console.log("checkedTile: " + nextSquareContent)
+                            break;
+                        };
+                    };
+                };
+
+
+                console.log("checkedTile: " + nextSquareContent)
+                if (nextSquareContent != null){
+                    if (nextSquareContent == curTurn){
+                        console.log("match!")
+                        counter++;
+                    }
+                    //break;
                 }
                 else{
                     break;
