@@ -4,6 +4,7 @@ window.createGameBoard(10,8,4);
 var rows = document.getElementById('nRows').value;
 var cols = document.getElementById('nCols').value;
 var winNumber = document.getElementById('winNumber').value;
+var firstTurn = true;
 //var curTurn = "X";
 
 //const tiles = new Array(80);
@@ -43,7 +44,6 @@ function createGameBoard(rows, cols, winNumber){
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
             //tile.addEventListener("click", click);
-            tile.innerText = "";
             gameboard.appendChild(tile).className = "tile";
             gameboard.appendChild(tile).row = row;
             gameboard.appendChild(tile).col = col;
@@ -52,9 +52,10 @@ function createGameBoard(rows, cols, winNumber){
     gameboard.onclick = function(e){
         var target = e.target;
         //alert("Row:" + target.row + " Col:" + target.col)
-        if (okTarget(target) && target.innerText == ""){
+        if (firstTurn || okTarget(target) && target.innerText == ""){
             if (xTurn){
                 target.innerText = "X";
+                firstTurn = false;
             }
             else{
                 target.innerText = "O";
@@ -64,7 +65,7 @@ function createGameBoard(rows, cols, winNumber){
             
         }
         else{
-            alert("Click on emtpy spot")
+            alert("Click on emtpy spot beside a placed piece")
         }
     };
 };
@@ -73,7 +74,19 @@ function okTarget(target){
     targetRow = target.row;
     targetCol = target.col;
 
-
+    for(let row = -1; row <= 1; row++){
+        for(let col = -1; col <= 1; col++){
+            checkedRow = targetRow+row;
+            checkedCol = targetCol+col;
+            if ((checkedRow > 0 && checkedRow <= rows) && (checkedCol > 0 && checkedCol <= cols) && !((row == 0) && (col == 0))){
+                let checkedSquare = document.querySelector('[col="'+(targetCol+col)+'"][row="'+(targetRow+row)+'"]');
+                if(checkedSquare.innerText != ""){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 function checkForWin(target){
@@ -108,15 +121,15 @@ function horizontalWin(){
         if (dir == 1){
             d = 1;
         }
-        console.log("direction " + d);
+        //console.log("direction " + d);
         for(let nTiles = 1; nTiles <= range; nTiles++){
             nextCol = startCol + (nTiles * d);
             if (nextCol > 0 && nextCol <= cols){
-                console.log("Checking: row "+startRow+" col "+nextCol);
+                //console.log("Checking: row "+startRow+" col "+nextCol);
                 let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+startRow+'"]').innerText;
-                console.log("checkedTile: " + nextSquare)
+                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    console.log("match!")
+                    //console.log("match!")
                     counter++;
                 }
                 else{
@@ -142,11 +155,11 @@ function verticalWin(){
         for(let nTiles = 1; nTiles <= range; nTiles++){
             nextRow = startRow + (nTiles * d);
             if (nextRow > 0 && nextRow <= rows){
-                console.log("Checking: row "+nextRow+" col "+startCol);
+                //console.log("Checking: row "+nextRow+" col "+startCol);
                 let nextSquare = document.querySelector('[col="'+startCol+'"][row="'+nextRow+'"]').innerText;
-                console.log("checkedTile: " + nextSquare)
+                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    console.log("match!")
+                    //console.log("match!")
                     counter++;
                 }
                 else{
@@ -172,11 +185,11 @@ function diagonalWin(){
             nextRow = startRow + (nTiles * d);
             nextCol = startCol + (nTiles * d);
             if ((nextRow > 0 && nextRow <= rows) && (nextCol > 0 && nextCol <= cols)){
-                console.log("Checking: row "+nextRow+" col "+nextCol);
+                //console.log("Checking: row "+nextRow+" col "+nextCol);
                 let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+nextRow+'"]').innerText;
-                console.log("checkedTile: " + nextSquare)
+                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    console.log("match!")
+                    //console.log("match!")
                     counter++;
                 }
                 else{
@@ -201,11 +214,11 @@ function diagonalWin(){
             nextRow = startRow + (nTiles * d);
             nextCol = startCol + (nTiles * (-d));
             if ((nextRow > 0 && nextRow <= rows) && (nextCol > 0 && nextCol <= cols)){
-                console.log("Checking: row "+nextRow+" col "+nextCol);
+                //console.log("Checking: row "+nextRow+" col "+nextCol);
                 let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+nextRow+'"]').innerText;
-                console.log("checkedTile: " + nextSquare)
+                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    console.log("match!")
+                    //console.log("match!")
                     counter++;
                 }
                 else{
