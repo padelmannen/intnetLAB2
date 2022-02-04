@@ -11,7 +11,7 @@ var gameRunning = false;
 //const tiles = new Array(80);
 
 function startGame() {
-    alert("start")
+    //alert("start")
     //window.location="game.html";
     //const checkBox = document.getElementById('nrwos').checked;
     //createGameboard(10, 8);
@@ -42,7 +42,7 @@ function updateGameboard () {
 
     // let gameboardTable = document.createElement("table");
     // gameboardTable.className = "gameboardTable";
-    //alert("Createing gameboard" + rows + cols)
+    //alert("Createing gameboard" + rows + cols) 
 };
 
 function createGameBoard(rows, cols, winNumber){
@@ -87,7 +87,7 @@ function createGameBoard(rows, cols, winNumber){
                 
             }
             else{
-                alert("Click on emtpy spot beside a placed piece")
+                alert("Click on emtpy spot beside a placed piece") 
             }
         }
     };
