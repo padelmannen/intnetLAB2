@@ -5,20 +5,25 @@ var rows = document.getElementById('nRows').value;
 var cols = document.getElementById('nCols').value;
 var winNumber = document.getElementById('winNumber').value;
 var firstTurn = true;
-//var curTurn = "X";
+var gameRunning = false;
 
-//const tiles = new Array(80);
 
 function startGame() {
-    //window.location="game.html";
-    //const checkBox = document.getElementById('nrwos').checked;
-    //createGameboard(10, 8);
-    //alert("clickade på startar spel")
-    return false;
+
+    updateGameboard();
+    document.getElementById("nCols").disabled = true;
+    document.getElementById("nRows").disabled = true;
+    document.getElementById("winNumber").disabled = true;
+    document.getElementById("startButton").disabled = true;
+    document.getElementById("gameboard").disabled = false;
+    gameRunning = true;
+    gameboard.style.cursor = "pointer";
+
+    
 };
 
 function updateGameboard () {
-    //gameboard = document.getElementById("gameboard");
+    
     rows = document.getElementById('nRows').value;
     cols = document.getElementById('nCols').value;
     document.getElementById('winNumber').setAttribute("max", Math.max(rows, cols).toString());
@@ -26,24 +31,22 @@ function updateGameboard () {
     gameboard.innerHTML = '';  //nollställer gameboard
     createGameBoard(rows, cols, winNumber);
 
-    // let gameboardTable = document.createElement("table");
-    // gameboardTable.className = "gameboardTable";
-    //alert("Createing gameboard" + rows + cols)
+
 };
 
 function createGameBoard(rows, cols, winNumber){
     const gameboard = document.getElementById("gameboard");
     gameboard.style.setProperty('--grid-rows', rows);
     gameboard.style.setProperty('--grid-cols', cols);
-    //alert("styled")
+
     for (var row = 1; row <= rows; row++) {
         for (var col = 1; col <= cols; col++) {
-            // alert("create tile")
             let tile = document.createElement("div");
             tile.innerText = "";
             tile.setAttribute("row", row.toString())
             tile.setAttribute("col", col.toString())
-            //tile.addEventListener("click", click);
+            tile.setAttribute("coordinate", row.toString()+","+col.toString())
+        
             gameboard.appendChild(tile).className = "tile";
             gameboard.appendChild(tile).row = row;
             gameboard.appendChild(tile).col = col;
@@ -51,21 +54,25 @@ function createGameBoard(rows, cols, winNumber){
     };
     gameboard.onclick = function(e){
         var target = e.target;
-        //alert("Row:" + target.row + " Col:" + target.col)
-        if (firstTurn || okTarget(target) && target.innerText == ""){
-            if (xTurn){
-                target.innerText = "X";
-                firstTurn = false;
+        if (gameRunning){
+            if (firstTurn || okTarget(target) && target.innerText == ""){
+                if (xTurn){
+                    target.innerText = "X";
+                    firstTurn = false;
+                }
+                else{
+                    target.innerText = "O";
+                }
+                if(checkForWin(target)){
+                    gameRunning = false;
+                    gameboard.style.cursor = "default";
+                }
+                xTurn = (!(xTurn));     
+                
             }
             else{
-                target.innerText = "O";
+                alert("Click on emtpy spot beside a placed piece") 
             }
-            checkForWin(target);
-            xTurn = (!(xTurn));     //av någon konstig anledning måste dessa vara i denna ordningen
-            
-        }
-        else{
-            alert("Click on emtpy spot beside a placed piece")
         }
     };
 };
@@ -100,17 +107,17 @@ function checkForWin(target){
 
     if(horizontalWin()){
         alert("Spelare " + curTurn + " vann!");
-        return;
+        return true;
     }
     if(verticalWin()){
         alert("Spelare " + curTurn + " vann!");
-        return;
+        return true;
     }
     if(diagonalWin()){
         alert("Spelare " + curTurn + " vann!");
-        return;
+        return true;
     }
-    
+    return false;
 }
 
 function horizontalWin(){
@@ -121,15 +128,11 @@ function horizontalWin(){
         if (dir == 1){
             d = 1;
         }
-        //console.log("direction " + d);
         for(let nTiles = 1; nTiles <= range; nTiles++){
             nextCol = startCol + (nTiles * d);
             if (nextCol > 0 && nextCol <= cols){
-                //console.log("Checking: row "+startRow+" col "+nextCol);
                 let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+startRow+'"]').innerText;
-                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    //console.log("match!")
                     counter++;
                 }
                 else{
@@ -155,11 +158,8 @@ function verticalWin(){
         for(let nTiles = 1; nTiles <= range; nTiles++){
             nextRow = startRow + (nTiles * d);
             if (nextRow > 0 && nextRow <= rows){
-                //console.log("Checking: row "+nextRow+" col "+startCol);
                 let nextSquare = document.querySelector('[col="'+startCol+'"][row="'+nextRow+'"]').innerText;
-                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    //console.log("match!")
                     counter++;
                 }
                 else{
@@ -185,11 +185,8 @@ function diagonalWin(){
             nextRow = startRow + (nTiles * d);
             nextCol = startCol + (nTiles * d);
             if ((nextRow > 0 && nextRow <= rows) && (nextCol > 0 && nextCol <= cols)){
-                //console.log("Checking: row "+nextRow+" col "+nextCol);
                 let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+nextRow+'"]').innerText;
-                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    //console.log("match!")
                     counter++;
                 }
                 else{
@@ -214,12 +211,9 @@ function diagonalWin(){
             nextRow = startRow + (nTiles * d);
             nextCol = startCol + (nTiles * (-d));
             if ((nextRow > 0 && nextRow <= rows) && (nextCol > 0 && nextCol <= cols)){
-                //console.log("Checking: row "+nextRow+" col "+nextCol);
                 let nextSquare = document.querySelector('[col="'+nextCol+'"][row="'+nextRow+'"]').innerText;
-                //console.log("checkedTile: " + nextSquare)
                 if (nextSquare == curTurn){
-                    //console.log("match!")
-                    counter++;
+                    counter++;  
                 }
                 else{
                     break;

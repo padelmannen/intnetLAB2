@@ -11,6 +11,7 @@ body{
 }
 
 #gameboard{
+    
     margin: 0 auto;
     display: grid;
     grid-template-rows: repeat(var(--grid-rows), auto);
